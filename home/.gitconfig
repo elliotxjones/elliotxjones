@@ -1,0 +1,22 @@
+# ~/.gitconfig
+[http "https://github.com"]
+	proxy = 
+[http "https://lfs.github.com"]
+	proxy = 
+[http "https://github-cloud.s3.amazonaws.com"]
+	proxy = 
+[http "https://github-cloud.githubusercontent.com"]
+	proxy = 
+[user]
+	email = 
+	name = 
+	signingkey = 
+[credential "https://github.com"]
+	helper = 
+[core]
+	editor = vim
+[alias]
+    lg = log --color --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    co = checkout
+[commit]
+	gpgsign = true
