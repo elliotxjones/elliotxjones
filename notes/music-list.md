@@ -1,0 +1,15 @@
+- Symphonie Espagnole for Violin and Orchestra, Opus 21
+- Trumpet Concerto in E major
+    - Hummel, Johann Nepomuk
+    - Hakan Hardenberger, trumpet
+    - Academy of St Martin in the Fields
+    - Neville Marriner
+- Piano Concerto No. 4 in C, Op. 38
+    - Cramer, Johann Baptist
+    - Howard Shelley, piano
+    - London Mozart Players
+- Prelude for cello and piano
+    - Moeran, Ernest John
+    - Alexander Baillie, cello
+    - John Thwaites, piano
+    - Somm 0175 
