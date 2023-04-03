@@ -1,4 +1,3 @@
-" ~/.vimrc
 set nocompatible
 
 " Load plugins first so vimrc configs take precedent.
@@ -38,11 +37,12 @@ nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
 " GitGutter Colors {{{
 let g:gitgutter_override_sign_column_highlight = 0
 highlight clear SignColumn
-highlight GitGutterAdd ctermfg=2 ctermbg=None
-highlight GitGutterChange ctermfg=3 ctermbg=None
-highlight GitGutterDelete ctermfg=1 ctermbg=None
-highlight GitGutterChangeDelete ctermfg=4 ctermbg=None
+highlight GitGutterAdd ctermfg=2 ctermbg=black
+highlight GitGutterChange ctermfg=3 ctermbg=black
+highlight GitGutterDelete ctermfg=1 ctermbg=black
+highlight GitGutterChangeDelete ctermfg=4 ctermbg=black
 " }}}
+
 " Configs from Jason {{{
 " automatically show matching brackets. works like it does in bbedit.
 set showmatch                   
@@ -107,7 +107,8 @@ set number
 set ruler
 
 " Highlight config
-highlight LineNr ctermfg=lightgrey
+"highlight LineNr ctermfg=lightgrey
+highlight LineNr ctermfg=darkgrey
 highlight Folded ctermbg=NONE
 highlight Normal guibg=NONE ctermbg=NONE
 set cursorline
