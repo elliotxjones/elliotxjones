@@ -13,4 +13,5 @@ pandoc "$1" \
     --include-in-header ~/bin/chapter-break.tex \
     --include-in-header ~/bin/inline-code.tex \
     --include-in-header ~/bin/bullet-list.tex \
+    --css=github-pandoc.css \
     -o "$2"
