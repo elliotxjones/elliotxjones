@@ -4,79 +4,20 @@ alias les='less -~KMQR-'
 
 alias sba='source ~/.bash_aliases; exec bash'
 alias vba='vim ~/.bash_aliases'
-alias vbas='vim ~/bin/bash_alias_scripts.sh'
 alias vsc='vim ~/.ssh/config'
-alias vkh='vim ~/.ssh/known_hosts'
 
 alias gpge='gpg --armour -e'
 
 alias cping='ping -c 2 www.gentoo.org'
 alias oprts='sudo netstat -ntupl'
 
+alias sshc='ssh -c aes256-cbc '
+alias gba='cat ~/.bash_aliases | grep "alias"'
+alias music='vim /mnt/c/Users/joneselx/projects/elliotxjones/notes/music-list.md'
 alias c='clear'
-
 
 # Functions
 alias qcd='QuickCD'
-alias passgen='PassGen'
-alias tres="TreeLess"
-alias lac='ListAllCount'
-alias ghist='GrepHistory'
-alias hints='PrintHints'
-
-alias lo='sudo cryptsetup luksOpen'
-alias lo='LuksOpen'
-alias md2pdf='MarkdownToPDF'
-alias md2html='MarkdownToHTML'
-
-alias sshc='ssh -c aes256-cbc '
-alias gba='cat ~/.bash_aliases | grep "alias"'
-alias creds='vim /mnt/c/Users/joneselx/OneDrive\ -\ Intel\ Corporation/Desktop/Jones-Farm/CSEA/notes/creds.txt'
-alias music='vim /mnt/c/Users/joneselx/projects/elliotxjones/notes/music-list.md'
-
-# alias `passgen`{{{
-PassGen() {
-    declare OPT=${1};
-    
-    if [ "$OPT" = "-h" ] || [ "$OPT" = "--help" ] || [ "$OPT" = "help" ]; then
-        printf "Generates random password and pipes to less.\n";
-        printf "Usage: passgen <option>\n";
-        printf "\t-h,--help,help\tprint this help and exit\n";
-        printf "\t\t<int>\tpassword character length (default 12)\n";
-    elif ( test -e "/home/elliot/bin/passgen.py" ); then
-        python3 -u ~/bin/passgen.py ${OPT} | less;
-    elif ! ( test -e "~/bin/passgen.py" ); then
-        printf "E: ~/bin/passgen.py not found, aborting.\n";
-    else
-        printf "E: Something is broken! Aborting :(\n";
-    fi
-
-    unset OPT
-}
-# }}}
-# alias `lo` {{{
-LuksOpen() {
-    declare LUKS_PART=${1:-"help"};
-
-    if [ "$LUKS_PART" = "help" ]; then
-        printf "Decryptes and mounts luks encrypted device partitions.\n";
-        printf "Usage: lo [luks partition]\n";
-    elif ( test -b "/dev/${LUKS_PART}" ); then
-        if ( test -f "/dev/mapper/${LUKS_PART}" ); then
-            sudo cryptsetup luksClose /dev/mapper/${LUKS_PART};
-        fi
-        sudo cryptsetup luksOpen /dev/${LUKS_PART} ${LUKS_PART};
-        sudo mkdir -p /media/$(whoami)/${LUKS_PART};
-        sudo mount /dev/mapper/${LUKS_PART} /media/$(whoami)/${LUKS_PART};
-        cd /media/$(whoami)/${LUKS_PART};
-        thunar /media/$(whoami)/${LUKS_PART};
-    elif ! ( test -b "/dev/${LUKS_PART}" ); then
-        printf "E: /dev/${LUKS_PART} does not exist, aborting.\n"
-    else
-        printf "E: Invalid operation, aborting.\n";
-    fi
-}
-# }}}
 # alias `qcd` {{{
 QuickCD() {
     declare QDIRS_OPT=${1:-"help"};
@@ -119,6 +60,34 @@ QuickCD() {
     unset QDIRS;
 }
 # }}}
+alias ghist='GrepHistory'
+# alias `ghist` {{{
+GrepHistory() {
+    history | grep ${1};
+};
+# }}}
+alias passgen='PassGen'
+# alias `passgen`{{{
+PassGen() {
+    declare OPT=${1};
+    
+    if [ "$OPT" = "-h" ] || [ "$OPT" = "--help" ] || [ "$OPT" = "help" ]; then
+        printf "Generates random password and pipes to less.\n";
+        printf "Usage: passgen <option>\n";
+        printf "\t-h,--help,help\tprint this help and exit\n";
+        printf "\t\t<int>\tpassword character length (default 12)\n";
+    elif ( test -e "/home/elliot/bin/passgen.py" ); then
+        python3 -u ~/bin/passgen.py ${OPT} | less;
+    elif ! ( test -e "~/bin/passgen.py" ); then
+        printf "E: ~/bin/passgen.py not found, aborting.\n";
+    else
+        printf "E: Something is broken! Aborting :(\n";
+    fi
+
+    unset OPT
+}
+# }}}
+alias tres="TreeLess"
 # alias `tres` {{{
 TreeLess() {
     if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
@@ -130,6 +99,7 @@ TreeLess() {
     less -~KMQR-;
 };
 # }}}
+alias lac='ListAllCount'
 # alias `lac` {{{
 ListAllCount() {
     declare -i TOTAL_COUNT=$(la ${1:-$pwd} | wc -l);
@@ -152,11 +122,7 @@ ListAllCount() {
     unset DIRECTORY_COUNT;
 };
 # }}}
-# alias `ghist` {{{
-GrepHistory() {
-    history | grep ${1};
-};
-# }}}
+alias md2pdf='MarkdownToPDF'
 # alias `md2pdf` {{{
 MarkdownToPDF() {
         #--css=github-pandoc.css \
@@ -178,6 +144,57 @@ MarkdownToPDF() {
         -o "$2"
 }
 # }}}
+
+alias cstash="CStash"
+# alias cstash {{{
+CStash() {
+    declare OPT=${1}
+
+    export CP_STASH
+    if [[ $CP_STASH = "" ]]; then
+        export CP_STASH=()
+    fi
+
+    if [[ $OPT = "" ]]; then
+        echo "No file or directory specified"
+    elif ! [[ -e $OPT ]]; then
+        echo "No such file or directory"
+    else
+        CP_STASH+=("$PWD/$OPT")
+        echo "Stashed $OPT"
+    fi  
+    
+    #if ! [[ $OPT = "" ]]; then
+    #    if
+    #    CP_STASH+=("$PWD/$OPT")
+    #    echo "Stashed $OPT"
+    #else
+    #    echo "No file or directory specified"
+    #fi
+}
+# }}}
+alias cpop="CPop"
+# alias cpop {{{
+CPop() {
+    OPT=${1}
+    export CP_STASH
+    if ! [[ $CP_STASH = "" ]]; then
+        if [[ -e ${CP_STASH[-1]} ]]; then
+            cp -vr ${CP_STASH[-1]} ./
+            echo "Popped ${CP_STASH[-1]}"
+            unset CP_STASH[-1]
+        else
+            echo "${CP_STASH[-1]} moved or missing"
+            unset CP_STASH[-1]
+        fi
+    else
+        #TODO: echo usage
+        echo "Stash is empty"
+    fi
+}
+# }}}
+
+alias hints='PrintHints'
 # alias `hints` {{{
 PrintHints() {
     printf "# Make Fat32 filesystem.\n    sudo mkfs.vfat -F32 [/dev/sdb3]\n";
@@ -191,10 +208,4 @@ PrintHints() {
     printf "# Kill tasks safely.\n    kill -15 [task PID]\n"
 };
 # }}}
-#
-# FUN
-# nc -4 -d -z -w 1 10.45.244.41 22 &> /de
-# v/null
-#
-# if [[ $? == 0 ]]; then     echo "online
-# "; else     echo "offline"; fi
+
