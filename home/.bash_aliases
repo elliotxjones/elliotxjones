@@ -24,6 +24,46 @@ alias lac='ListAllCount'
 alias ghist='GrepHistory'
 alias hints='PrintHints'
 
+alias cstash='CStash'
+# alias cstash {{{
+CStash() {
+    declare opt=${1};
+    if [[ $CP_STASH = "" ]]; then
+        export CP_STASH=();
+    fi
+
+    if [[ $opt = "" ]]; then
+        echo "No file or directory specified"
+    elif [[ $opt = "-l" ]]; then
+        for i in ${CP_STASH[*]};
+        do
+            echo $i
+        done
+    elif ! [[ -e $opt ]]; then
+        echo "No such file or directory"
+    else
+        CP_STASH+=("$PWD/$opt");
+        echo "stashed $PWD/$opt";
+    fi
+}
+# }}}
+alias cpop='CPop'
+# alias cpop {{{
+CPop() {
+    export CP_STASH
+    if ! [[ $CP_STASH = "" ]]; then
+        if [[ -e ${CP_STASH[-1]} ]]; then
+            cp -vr ${CP_STASH[-1]} ./
+        else
+            echo "File moved or missing"
+        fi
+        unset CP_STASH[-1];
+    else
+        echo "Stash is empty"
+    fi
+}
+# }}}
+
 alias lo='sudo cryptsetup luksOpen'
 alias lo='LuksOpen'
 alias md2pdf='MarkdownToPDF'
