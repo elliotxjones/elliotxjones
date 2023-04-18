@@ -23,7 +23,7 @@ CPop() {
     export CP_STASH
     if ! [[ $CP_STASH = "" ]]; then
         if [[ -e ${CP_STASH[-1]} ]]; then
-            cp -vr ${CP_STASH[-1]} ./
+            cp -v "${CP_STASH[-1]}" ./
             echo "Popped ${CP_STASH[-1]}"
             unset CP_STASH[-1]
         else
