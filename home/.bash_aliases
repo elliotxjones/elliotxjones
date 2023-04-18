@@ -16,6 +16,50 @@ alias gba='cat ~/.bash_aliases | grep "alias"'
 alias music='vim /mnt/c/Users/joneselx/projects/elliotxjones/notes/music-list.md'
 alias c='clear'
 
+alias cpop="CPop"
+# alias cpop {{{
+CPop() {
+    OPT=${1}
+    export CP_STASH
+    if ! [[ $CP_STASH = "" ]]; then
+        if [[ -e ${CP_STASH[-1]} ]]; then
+            cp -vr ${CP_STASH[-1]} ./
+            echo "Popped ${CP_STASH[-1]}"
+            unset CP_STASH[-1]
+        else
+            echo "${CP_STASH[-1]} moved or missing"
+            unset CP_STASH[-1]
+        fi
+    else
+        echo "Stash is empty"
+    fi
+}
+# }}}
+alias cstash='CStash'
+# alias cstash {{{
+CStash() {
+    declare opt=${1};
+    export CP_STASH
+    if [[ $CP_STASH = "" ]]; then
+        export CP_STASH=();
+    fi
+
+    if [[ $opt = "" ]]; then
+        echo "No file or directory specified"
+    elif [[ $opt = "-l" ]]; then
+        for i in ${CP_STASH[*]};
+        do
+            echo $i
+        done
+    elif ! [[ -e $opt ]]; then
+        echo "No such file or directory"
+    else
+        CP_STASH+=("$PWD/$opt");
+        echo "stashed $PWD/$opt";
+    fi
+}
+# }}}
+
 # Functions
 alias qcd='QuickCD'
 # alias `qcd` {{{
@@ -142,55 +186,6 @@ MarkdownToPDF() {
         --include-in-header ~/bin/inline-code.tex \
         --include-in-header ~/bin/bullet-list.tex \
         -o "$2"
-}
-# }}}
-
-alias cstash="CStash"
-# alias cstash {{{
-CStash() {
-    declare OPT=${1}
-
-    export CP_STASH
-    if [[ $CP_STASH = "" ]]; then
-        export CP_STASH=()
-    fi
-
-    if [[ $OPT = "" ]]; then
-        echo "No file or directory specified"
-    elif ! [[ -e $OPT ]]; then
-        echo "No such file or directory"
-    else
-        CP_STASH+=("$PWD/$OPT")
-        echo "Stashed $OPT"
-    fi  
-    
-    #if ! [[ $OPT = "" ]]; then
-    #    if
-    #    CP_STASH+=("$PWD/$OPT")
-    #    echo "Stashed $OPT"
-    #else
-    #    echo "No file or directory specified"
-    #fi
-}
-# }}}
-alias cpop="CPop"
-# alias cpop {{{
-CPop() {
-    OPT=${1}
-    export CP_STASH
-    if ! [[ $CP_STASH = "" ]]; then
-        if [[ -e ${CP_STASH[-1]} ]]; then
-            cp -vr ${CP_STASH[-1]} ./
-            echo "Popped ${CP_STASH[-1]}"
-            unset CP_STASH[-1]
-        else
-            echo "${CP_STASH[-1]} moved or missing"
-            unset CP_STASH[-1]
-        fi
-    else
-        #TODO: echo usage
-        echo "Stash is empty"
-    fi
 }
 # }}}
 
