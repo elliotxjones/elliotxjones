@@ -61,6 +61,18 @@ CStash() {
 # }}}
 
 # Functions
+alias lsd="ListDirs"
+# alias lsd {{{
+ListDirs() {
+    declare opt=${1}
+    for i in $(ls ${opt})
+    do
+        if [ -d $opt$i ]; then
+            echo $opt$i;
+        fi
+    done
+}
+# }}}
 alias qcd='QuickCD'
 # alias `qcd` {{{
 QuickCD() {
