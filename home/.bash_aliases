@@ -23,8 +23,8 @@ CPop() {
     export CP_STASH
     if ! [[ $CP_STASH = "" ]]; then
         if [[ -e ${CP_STASH[-1]} ]]; then
-            cp -v "${CP_STASH[-1]}" ./
-            echo "Popped ${CP_STASH[-1]}"
+            cp -vr "${CP_STASH[-1]}" ./
+            #echo "Popped ${CP_STASH[-1]}"
             unset CP_STASH[-1]
         else
             echo "${CP_STASH[-1]} moved or missing"
@@ -47,15 +47,15 @@ CStash() {
     if [[ $opt = "" ]]; then
         echo "No file or directory specified"
     elif [[ $opt = "-l" ]]; then
-        for i in ${CP_STASH[*]};
+        for i in ${!CP_STASH[@]}
         do
-            echo $i
+            echo ${CP_STASH[${i}]};
         done
     elif ! [[ -e $opt ]]; then
         echo "No such file or directory"
     else
         CP_STASH+=("$PWD/$opt");
-        echo "stashed $PWD/$opt";
+        echo "stashed $opt";
     fi
 }
 # }}}
