@@ -847,6 +847,7 @@ printf("%d\n", *(myNumbers + 1));
 
 ## Functions
 
+{{{
 Syntax for declaring functions:  
   
 ```c
@@ -1015,6 +1016,40 @@ int sum(int k) {
         - Returns the sine of x (x is in radians)
     - `tan(x)`
         - Returns the tangent of an angle
+}}}
+
+## Files
+
+### Creating files
+
+To create, open, read, and write to files, declare a pointer of type  
+`FILE`, and use the `fopen()` builtin function, where `mode` is a  
+single character that represents the access method for the file.  
+  
+Mode can be one of the following.  
+- `w`: Write to a file. If none exists, create the file.
+- `a`: Append to a file.
+- `w`: Reads from a file.
+  
+To close the file after accessing, use the `fclose()` builtin  
+function.  
+  
+Example:  
+  
+```c
+FILE *fptr
+// Open a file
+fptr = fopen(filename, mode);
+// Close the file
+fclose(fptr);
+```  
+  
+### Writing to files
+
+To write to a file, use the `fprint()` builtin function with the  
+pointer value (`fptr` in this example), and some text.  
+  
+
 
 # References
 
