@@ -110,7 +110,7 @@ set ruler
 highlight LineNr ctermfg=lightgrey
 highlight Folded ctermbg=NONE
 highlight Normal guibg=NONE ctermbg=NONE
-set cursorline
+"set cursorline
 highlight CursorLineNR ctermbg=None cterm=bold
 highlight CursorLine ctermbg=None
 set fillchars+=vert:\ 
